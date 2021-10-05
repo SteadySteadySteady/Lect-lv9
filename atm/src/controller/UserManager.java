@@ -117,7 +117,7 @@ public class UserManager {
 	}
 
 	public void printAccMoney(int log, int idx) {
-		System.out.printf("ÇöÀç ÀÜ°í : %d¿ø\n", this.getAccs(log).get(idx).getMoney());
+		System.out.printf("ÇöÀç ÀÜ°í : %d¿ø\n", this.getAccs(log).get(idx).getMoney());		
 	}
 	
 	public void removeAcc(int log, int idx) {
@@ -148,4 +148,22 @@ public class UserManager {
 	}
 	// ¤¤µ·
 
+	@Override
+	public String toString() {
+		String data = "";
+		for(int i = 0; i < this.users.size(); i += 1) {
+			data += this.users.get(i).getId()+"/";
+			data += this.users.get(i).getPw()+"/";
+			data += this.users.get(i).getName()+",";
+			for(int j = 0; j < this.getAccs(i).size(); j += 1) {
+				data += this.getAccs(i).get(j).getUserCode()+"/";
+				data += this.getAccs(i).get(j).getAccNum()+"/";
+				data += this.getAccs(i).get(j).getMoney()+"/";
+			}
+			if(i != this.users.size()-1) {
+				data += "\n";
+			}
+		}
+		return data;
+	}
 }
