@@ -44,7 +44,7 @@ public class BankManager {
 	}
 	
 	private void selectMenu() {
-		int sel = s.nextInt();
+		int sel = Integer.parseInt(s.next());
 		if (sel == 1)
 			this.um.join();
 		else if (sel == 2) {
@@ -207,12 +207,26 @@ public class BankManager {
 				selectMenu();				
 			}
 		} else if (sel == 2) {
-			
+			this.pass = true;
+			while(this.pass) {
+				System.out.print("1.저장 2.로드\n");
+				selectFileMenu();
+			}
 		} else {
 			System.out.println("잘못된 값");
 		}
 	}
 	
+	private void selectFileMenu() {
+		int sel = Integer.parseInt(s.next());
+		if(sel == 1) {
+			this.fm.save(this.toString());
+			System.out.println("저장 완료");
+		} else if(sel == 2) {
+			
+		}
+	}
+
 	private int selAcc() {
 		for (int i = 0; i < this.um.instance.getAccs(this.log).size(); i += 1) {
 			System.out.printf("%d) %d\n", i + 1, this.um.instance.getAccs(this.log).get(i).getAccNum());

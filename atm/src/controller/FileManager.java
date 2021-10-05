@@ -1,13 +1,37 @@
 package controller;
 
-import java.io.File;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.FileWriter;
 
 public class FileManager {
 	public static FileManager instance = new FileManager();
 	String filename = "atm.txt";
-	File atm = new File(filename);
 	
+	public void save(String data) {
+		try {
+			FileWriter fw = new FileWriter(filename);
+			fw.write(data);
+			fw.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+	
+	public void load(String data) {
+		try {
+			FileReader fr = new FileReader(filename);
+			BufferedReader br = new BufferedReader(fr);
+			String info = "";
+			while(info != null) { 
+				
+			}
+			fr.close();
+			br.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
 	// 메소드
 	// 저장
 	// 로드
