@@ -45,14 +45,13 @@ public class BankManager {
 	
 	private void selectMenu() {
 		int sel = s.nextInt();
-		if (sel == 1) {
+		if (sel == 1)
 			this.um.join();
-		} else if (sel == 2) {
-			if (!logCheck()) {
+		else if (sel == 2) {
+			if (!logCheck())
 				this.um.leave(this.log);
-			} else {
+			else
 				System.out.println("로그인 후 이용가능");
-			}
 		} else if (sel == 3) {
 			if (logCheck())
 				logIn();
@@ -64,63 +63,56 @@ public class BankManager {
 			else
 				this.log = -1;
 		} else if (sel == 5) {
-			if (logCheck()) {
+			if (logCheck())
 				System.out.println("로그인 후 이용가능");
-			} else {
-				if (this.um.getAccCnt(this.log) == 0) {
+			else {
+				if (this.um.getAccCnt(this.log) == 0)
 					System.out.println("계좌 개설후 이용가능합니다");
-				} else 
+				else 
 					deposit();
 			}
 		} else if (sel == 6) {
-			if (logCheck()) {
+			if (logCheck())
 				System.out.println("로그인 후 이용가능");
-			} else {
-				if (this.um.getAccCnt(this.log) == 0) {
+			else {
+				if (this.um.getAccCnt(this.log) == 0)
 					System.out.println("계좌 개설후 이용가능합니다");
-				} else 
+				else 
 					withdraw();
 			}
 		} else if (sel == 7) {
-			if (logCheck()) {
+			if (logCheck())
 				System.out.println("로그인 후 이용가능");
-			} else {
-				if (this.um.getAccCnt(this.log) == 0) {
+			else {
+				if (this.um.getAccCnt(this.log) == 0)
 					System.out.println("계좌 개설후 이용가능합니다");
-				} else {
-					int selAcc = selAcc();
-					if (selAcc < 0 || selAcc >= this.um.getAccCnt(this.log)) {
-						System.out.println("잘못된 값");
-					} else {
-						System.out.print("이체할 계좌 입력 : ");
-						int acc = Integer.parseInt(s.next());
-						int userNum = -1;
-						int accNum = -1;
-						for(int i = 0; i < this.um.getUserSize(); i += 1) {
-							for(int j = 0; j < this.um.getAccCnt(i); j += 1) {
-								if(acc == this.um.getAccs(i).get(j).getAccNum()) {
-									userNum = i;
-									accNum = j;
-									break;
-								}
-							}
-						}
-						if(userNum == -1 || accNum == -1) {
-							System.out.println("없는 계좌");
-						} else {
-							
-						}
-					}
-				}
+				else 
+					transfer();
 			}
 		} else if (sel == 8) {
-			if (logCheck()) {
+			if (logCheck())
 				System.out.println("로그인 후 이용가능");
-			} else 
+			else 
 				addAcc();
-		} else if (sel == 10) {
-			this.pass = false;
+		} else if(sel == 9) {
+			if (logCheck())
+				System.out.println("로그인 후 이용가능");
+			else 
+				if (this.um.getAccCnt(this.log) == 0)
+					System.out.println("개설된 계좌가 없습니다");
+				else 
+					removeAcc();
 		}
+		else if (sel == 10) 
+			this.pass = false;
+	}
+
+	private void removeAcc() {
+		int selAcc = selAcc();
+		if (selAcc < 0 || selAcc >= this.um.getAccCnt(this.log))
+			System.out.println("잘못된 값");
+		else
+			this.um.removeAcc(this.log, selAcc);
 	}
 
 	private void addAcc() {
@@ -134,9 +126,9 @@ public class BankManager {
 
 	private void withdraw() {
 		int selAcc = selAcc();
-		if (selAcc < 0 || selAcc >= this.um.getAccCnt(this.log)) {
+		if (selAcc < 0 || selAcc >= this.um.getAccCnt(this.log))
 			System.out.println("잘못된 값");
-		} else {
+		else {
 			this.um.printAccMoney(this.log, selAcc);
 			System.out.print("출금할 금액 입력 : ");
 			int money = s.nextInt();
@@ -150,12 +142,49 @@ public class BankManager {
 			}
 		}
 	}
+	
+	private void transfer() {
+		int selAcc = selAcc();
+		if (selAcc < 0 || selAcc >= this.um.getAccCnt(this.log))
+			System.out.println("잘못된 값");
+		else {
+			System.out.print("이체할 계좌 입력 : ");
+			int acc = Integer.parseInt(s.next());
+			int userNum = -1;
+			int accNum = -1;
+			for(int i = 0; i < this.um.getUserSize(); i += 1) {
+				for(int j = 0; j < this.um.getAccCnt(i); j += 1) {
+					if(acc == this.um.getAccs(i).get(j).getAccNum()) {
+						userNum = i;
+						accNum = j;
+						break;
+					}
+				}
+			}
+			if(userNum == -1 || accNum == -1) {
+				System.out.println("없는 계좌");
+			} else {
+				System.out.print("이체할 금액 입력 : ");
+				int money = Integer.parseInt(s.next());
+				if (money <= 0) {
+					System.out.println("잘못된 값");
+				} else if (money > this.um.getAccs(this.log).get(selAcc).getMoney()) {
+					System.out.println("잔액 부족");
+				} else {
+					this.um.setAccMoney(this.log, selAcc, -money);
+					this.um.setAccMoney(userNum, accNum, money);
+					System.out.println("이체 완료");
+				}
+			}
+		}
+	}
 
+	
 	private void deposit() {
 		int selAcc = selAcc();
-		if (selAcc < 0 || selAcc >= this.um.getAccCnt(this.log)) {
+		if (selAcc < 0 || selAcc >= this.um.getAccCnt(this.log))
 			System.out.println("잘못된 값");
-		} else {
+		else {
 			this.um.printAccMoney(this.log, selAcc);
 			System.out.print("입금할 금액 입력 : ");
 			int money = s.nextInt();

@@ -120,6 +120,13 @@ public class UserManager {
 		System.out.printf("현재 잔고 : %d원\n", this.getAccs(log).get(idx).getMoney());
 	}
 	
+	public void removeAcc(int log, int idx) {
+		if(this.getAccs(log).get(idx).getMoney() != 0)
+			System.out.println("잔고를 출금 또는 이체하여 잔고를 0원으로 만들어주시길 바랍니다");
+		else
+			this.getAccs(log).remove(idx);
+	}
+	
 	// 계좌 생성
 	public void addAcc(int log) {
 		while(true) {
@@ -134,6 +141,7 @@ public class UserManager {
 			}
 			if(exist == false) {
 				this.users.get(log).getAccs().add(new Account(this.users.get(log).getCode(), rNum));
+				System.out.println("생성된 계좌번호 : " + rNum);
 				break;
 			}
 		}
