@@ -18,7 +18,11 @@ public class UserManager {
 	private UserManager() {
 		this.users = new ArrayList<>();
 	}
-
+	
+	public int getUserSize() {
+		return this.users.size();
+	}
+	
 	// 기능 구현
 	// 가입
 	public void join() {
@@ -53,15 +57,18 @@ public class UserManager {
 				}
 			}
 			this.users.add(new User(code, id, pw, name));
+			System.out.println("회원가입 완료");
 		}
 	}
 
 	// 탈퇴
-	public void withdraw(int log) {
+	public void leave(int log) {
 		System.out.print("PW 입력 : ");
 		String pw = s.next();
-		if (users.get(log).getPw().equals(pw))
+		if (users.get(log).getPw().equals(pw)) {
 			this.users.remove(log);
+			System.out.println("탈퇴 완료");
+		}
 		else
 			System.out.println("비밀번호가 틀렸습니다");
 	}
@@ -88,7 +95,6 @@ public class UserManager {
 	// ㄴ패스워드
 	public void printPw(int log) {
 		System.out.printf("PW : %s", users.get(log).getPw());
-
 	}
 
 	// 이름
@@ -97,22 +103,23 @@ public class UserManager {
 	}
 
 	// 계좌 유무
-	public int checkAccCnt(int log) {
-		return this.users.get(log).getAccCnt();
-	}
 
 	public ArrayList<Account> getAccs(int log) {
 		return this.users.get(log).getAccs();
 	}
 
 	public int getAccCnt(int log) {
-		return this.users.get(log).getAccCnt();
+		return this.getAccs(log).size();
 	}
 
 	public void setAccMoney(int log, int idx, int money) {
 		this.users.get(log).setMoney(idx, money);
 	}
 
+	public void printAccMoney(int log, int idx) {
+		System.out.printf("현재 잔고 : %d원\n", this.getAccs(log).get(idx).getMoney());
+	}
+	
 	// 계좌 생성
 	public void addAcc(int log) {
 		while(true) {
