@@ -89,9 +89,13 @@ public class UserManager {
 				log = i;
 			}
 		}
-		if(pw.equals(this.users.get(log).getPw()))
-			return log;
-		return -1;
+		if(log == -1)
+			return -1;
+		else {
+			if(pw.equals(this.users.get(log).getPw()))
+				return log;			
+			return -1;
+		}
 	}
 
 	// 회원조회
