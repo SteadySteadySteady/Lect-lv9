@@ -220,7 +220,7 @@ public class BankManager {
 	private void selectFileMenu() {
 		int sel = Integer.parseInt(s.next());
 		if(sel == 1) {
-			this.fm.save(this.toString());
+			this.fm.save(this.um.toString());
 			System.out.println("저장 완료");
 		} else if(sel == 2) {
 			

@@ -11,6 +11,7 @@ public class FileManager {
 	public void save(String data) {
 		try {
 			FileWriter fw = new FileWriter(filename);
+			System.out.println(data);
 			fw.write(data);
 			fw.close();
 		} catch (Exception e) {
