@@ -208,7 +208,7 @@ public class BankManager {
 		} else if (sel == 2) {
 			this.pass = true;
 			while(this.pass) {
-				System.out.print("1.저장 2.로드\n");
+				System.out.print("1.저장 2.로드 3.뒤로가기\n");
 				selectFileMenu();
 			}
 		} else {
@@ -223,7 +223,9 @@ public class BankManager {
 			System.out.println("저장 완료");
 		} else if(sel == 2) {
 			this.um.setUsersNew();
-			
+			this.fm.load();
+		} else if(sel == 3) {
+			this.pass = false;
 		}
 	}
 

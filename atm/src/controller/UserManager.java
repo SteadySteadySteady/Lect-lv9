@@ -15,6 +15,10 @@ public class UserManager {
 	private ArrayList<User> users = null;
 	public static UserManager instance = new UserManager();
 
+	public void addUser(int code, String id, String pw, String name) {
+		this.users.add(new User(code, id, pw, name));
+	}
+	
 	private UserManager() {
 		this.users = new ArrayList<>();
 	}
@@ -144,11 +148,15 @@ public class UserManager {
 				}
 			}
 			if(exist == false) {
-				this.users.get(log).getAccs().add(new Account(this.users.get(log).getCode(), rNum));
+				this.users.get(log).getAccs().add(new Account(this.users.get(log).getCode(), rNum, 0));
 				System.out.println("»ý¼ºµÈ °èÁÂ¹øÈ£ : " + rNum);
 				break;
 			}
 		}
+	}
+	
+	public void setAcc(int log, int userCode, int accNum, int money) {
+		this.users.get(log).getAccs().add(new Account(userCode, accNum, money));
 	}
 	// ¤¤µ·
 
@@ -156,13 +164,14 @@ public class UserManager {
 	public String toString() {
 		String data = "";
 		for(int i = 0; i < this.users.size(); i += 1) {
+			data += this.users.get(i).getCode()+"/";
 			data += this.users.get(i).getId()+"/";
 			data += this.users.get(i).getPw()+"/";
 			data += this.users.get(i).getName()+",";
 			for(int j = 0; j < this.getAccs(i).size(); j += 1) {
 				data += this.getAccs(i).get(j).getUserCode()+"/";
 				data += this.getAccs(i).get(j).getAccNum()+"/";
-				data += this.getAccs(i).get(j).getMoney()+"/";
+				data += this.getAccs(i).get(j).getMoney()+"_";
 			}
 			if(i != this.users.size()-1) {
 				data += "\n";
