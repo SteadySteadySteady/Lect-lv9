@@ -25,8 +25,11 @@ public class FileManager {
 			BufferedReader br = new BufferedReader(fr);
 			String info = "";
 			while(info != null) { 
+				info += br.readLine()+"\n";
 				
 			}
+			String splitLine[] = info.split("\n");
+			
 			fr.close();
 			br.close();
 		} catch (Exception e) {

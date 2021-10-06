@@ -19,7 +19,6 @@ public class BankManager {
 	public void run() {
 		boolean isRun = true;
 		while (isRun) {
-			printAllAcc();
 			printMenu();
 		}
 	}
@@ -223,6 +222,7 @@ public class BankManager {
 			this.fm.save(this.um.toString());
 			System.out.println("저장 완료");
 		} else if(sel == 2) {
+			this.um.setUsersNew();
 			
 		}
 	}
@@ -234,9 +234,5 @@ public class BankManager {
 		System.out.print("계좌 선택 : ");
 		int selAcc = s.nextInt() - 1;
 		return selAcc;
-	}
-
-	private void printAllAcc() {
-
 	}
 }

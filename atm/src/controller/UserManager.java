@@ -19,6 +19,10 @@ public class UserManager {
 		this.users = new ArrayList<>();
 	}
 	
+	public void setUsersNew() {
+		this.users = new ArrayList<>();
+	}
+	
 	public int getUserSize() {
 		return this.users.size();
 	}
