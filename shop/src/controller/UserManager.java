@@ -1,5 +1,9 @@
 package controller;
 
-public class UserManager {
+import models.User;
 
+public class UserManager {
+	public static UserManager instance = new UserManager();
+	
+	
 }

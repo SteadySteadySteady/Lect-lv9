@@ -1,5 +1,7 @@
 package models;
 
-public class Shop {
+import controller.UserManager;
 
+public class Shop {
+	UserManager um = UserManager.instance;
 }
