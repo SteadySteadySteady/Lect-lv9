@@ -1,7 +1,4 @@
-package models;
-
-import controller.ItemManager;
-import controller.UserManager;
+package controller;
 
 public class Shop {
 	UserManager um = UserManager.instance;
