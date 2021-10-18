@@ -1,6 +1,9 @@
 package game;
 
+import java.util.Random;
+
 public class Unit {
+	Random r = new Random();
 	private String name;
 	private int ad;
 	private int df;
@@ -37,6 +40,9 @@ public class Unit {
 	public int getPos() {
 		return pos;
 	}
+	public void setPos(int pos) {
+		this.pos = pos;
+	}
 	public void print() {
 		System.out.printf("[%s] : HP_%d, AD_%d, DF_%d\n", name, hp, ad, df);
 	}
@@ -46,8 +52,8 @@ public class Unit {
 		target.setHp(target.getHp()-damage);
 		System.out.printf("[%s]의 공격 %d의 피해\n", name, damage);
 	}
-	private boolean check() {
-		if(hp <=0) return false;
-			return true;
+	public boolean dead() {
+		if(hp <=0) return true;
+			return false;
 	}
 }
