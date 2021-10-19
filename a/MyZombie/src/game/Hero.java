@@ -19,7 +19,9 @@ public class Hero extends Unit{
 				if(((ZombieKing) target).getSheild() < 0) {
 					((ZombieKing) target).setHp(((ZombieKing) target).getHp() +((ZombieKing) target).getSheild());
 					((ZombieKing) target).setSheild(0);
-				}
+					System.out.println("½¯µå°¡ ÆÄ±«µÆ´Ù");
+				} 
+				else System.out.println("°ø°ÝÀÌ ¸·Çû´Ù");
 			} else super.attack(target);
 		}
 		else super.attack(target);
@@ -33,6 +35,9 @@ public class Hero extends Unit{
 			player.setHp(100);
 			potionLeft -= 1;
 		}
+	}
+	public void setAct(int act) {
+		this.act = act;
 	}
 	public int getAct() {
 		return act;
