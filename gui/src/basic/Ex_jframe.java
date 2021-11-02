@@ -22,6 +22,7 @@ import javax.swing.JPanel;
 //	¤¤ JButton, JTextField, JLabel, JCheckBox ... 
 class HeadTitle extends JLabel {
 	public HeadTitle() {
+//		setLayout(null);
 		setBounds(245, 0, 100, 100);
 		setText("Start");
 		setFont(new Font("", Font.BOLD, 30));
