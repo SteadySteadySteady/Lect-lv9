@@ -1,8 +1,19 @@
 package snake;
 
 public class Rect {
-	private int x, y, width, height;
-	private int snakeNum;
+	private int x, y, width, height, snakeNum;
+	private boolean item;
+	public Rect(int x, int y, int width, int height) {
+		this.x = x;
+		this.y = y;
+		this.width = width;
+		this.height = height;
+	}
+	
+	public boolean getItem() {
+		return item;
+	}
+	
 	public int getX() {
 		return x;
 	}
@@ -23,6 +34,10 @@ public class Rect {
 		return snakeNum;
 	}
 	
+	public void setSnakeNum(int num) {
+		this.snakeNum = num;
+	}
+	
 	public void setX(int x) {
 		this.x = x;
 	}
@@ -31,4 +46,7 @@ public class Rect {
 		this.y = y;
 	}
 	
+	public void setItem(boolean item) {
+		this.item = item;
+	}
 }
