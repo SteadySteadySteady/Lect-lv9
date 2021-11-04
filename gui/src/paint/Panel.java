@@ -2,19 +2,23 @@ package paint;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
 public class Panel extends Listener {
-	private int startY, startX, width, height, tempY, tempX;
-	private JButton close;
+	private Rect rect = new Rect();
+	private boolean shift;
+	private int dragY, dragX, startY, startX, gapY, gapX;
+	public JButton close;
 	public Panel() {
 		setLayout(null);
 		setBounds(0,0,1500,900);
 //		setBackground(new Color(137, 181, 175));
 		setCloseButton();
+		setFocusable(true);
 		addMouseListener(this);
 		addMouseMotionListener(this);
 		addKeyListener(this);
@@ -37,32 +41,82 @@ public class Panel extends Listener {
 	
 	@Override
 	public void mousePressed(MouseEvent e) {
-		width = 0;
-		height = 0;
+		rect.setWidth(0);
+		rect.setHeight(0);
+		rect.setY(0);
+		rect.setX(0);
 		startY = e.getY();
 		startX = e.getX();
-		tempY = startY;
-		tempX = startX;
 	}
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		if(e.getY() - startY < 0) {
-			startY = e.getY();
-			height = tempY - startY;
-		} else {
-			height = e.getY() - startY;
+		dragY = e.getY();
+		dragX = e.getX();
+		gapY = startY - dragY;
+		gapX = startX - dragX;
+		if(gapY < 0) {
+			rect.setY(startY);
+			rect.setHeight(gapY*-1);
 		}
-		if(e.getX() - startX < 0) {
-			startX = e.getX();
-			width = tempX - startX;
-		} else {
-			width = e.getX() - startX;
+		else if(gapY > 0) {
+			rect.setY(dragY);
+			rect.setHeight(gapY);
 		}
+		if(gapX < 0) {
+			rect.setX(startX);
+			rect.setWidth(gapX*-1);
+		}
+		else if(gapX > 0) {
+			rect.setX(dragX);
+			rect.setWidth(gapX);
+		}
+		if(shift) {
+			if(gapY < 0 && gapX < 0) {
+				if(rect.getHeight() > rect.getWidth()) {
+					rect.setWidth(rect.getHeight());
+				} else {
+					rect.setHeight(rect.getWidth());
+				}
+			} else if(gapY < 0 && gapX > 0) {
+				if(rect.getHeight() > gapX) {
+					rect.setX(startX - rect.getHeight());
+					rect.setWidth(rect.getHeight());
+				} else {
+					rect.setHeight(rect.getWidth());
+				}
+			} else if(gapY > 0 && gapX < 0) {
+				if(rect.getWidth() > gapY) {
+					rect.setY(startY - rect.getWidth());
+					rect.setHeight(rect.getWidth());
+				} else {
+					rect.setWidth(rect.getHeight());
+				}
+			} else if(gapY > 0 && gapY > 0) {
+				if(rect.getHeight() > gapX) {
+					rect.setX(startX - rect.getHeight());
+					rect.setWidth(rect.getHeight());
+				} else if(rect.getWidth() > gapY) {
+					rect.setY(startY - rect.getWidth());
+					rect.setHeight(rect.getWidth());
+				}
+			}
+		}
+	}
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if(e.getKeyCode() == e.VK_SHIFT) {
+			shift = true;
+		}
+	}
+	@Override
+	public void keyReleased(KeyEvent e) {
+		shift = false;
 	}
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		g.drawRect(startX, startY, width, height);
+		requestFocusInWindow();
+		g.drawRect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
 		repaint();
 	}
 }

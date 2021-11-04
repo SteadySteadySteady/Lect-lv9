@@ -1,5 +1,7 @@
 package paint;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -8,7 +10,7 @@ import java.awt.event.MouseMotionListener;
 
 import javax.swing.JPanel;
 
-public class Listener extends JPanel implements MouseListener, MouseMotionListener, KeyListener{
+public class Listener extends JPanel implements MouseListener, MouseMotionListener, KeyListener, ActionListener{
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
@@ -65,6 +67,12 @@ public class Listener extends JPanel implements MouseListener, MouseMotionListen
 
 	@Override
 	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
