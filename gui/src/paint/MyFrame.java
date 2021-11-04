@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 
-public class MyFrame extends JFrame implements ActionListener{
+public class MyFrame extends JFrame implements ActionListener {
 	private Panel panel = new Panel();
 	public MyFrame() {
 		setLayout(null);

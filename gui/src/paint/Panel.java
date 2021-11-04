@@ -4,12 +4,14 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
 public class Panel extends Listener {
-	private Rect rect = new Rect();
+	private ArrayList<Rect> rect = new ArrayList<>();
+	private int rectNum = -1;
 	private boolean shift;
 	private int dragY, dragX, startY, startX, gapY, gapX;
 	public JButton close;
@@ -41,10 +43,12 @@ public class Panel extends Listener {
 	
 	@Override
 	public void mousePressed(MouseEvent e) {
-		rect.setWidth(0);
-		rect.setHeight(0);
-		rect.setY(0);
-		rect.setX(0);
+		rectNum += 1;
+		rect.add(new Rect());
+		rect.get(rectNum).setWidth(0);
+		rect.get(rectNum).setHeight(0);
+		rect.get(rectNum).setY(0);
+		rect.get(rectNum).setX(0);
 		startY = e.getY();
 		startX = e.getX();
 	}
@@ -55,49 +59,49 @@ public class Panel extends Listener {
 		gapY = startY - dragY;
 		gapX = startX - dragX;
 		if(gapY < 0) {
-			rect.setY(startY);
-			rect.setHeight(gapY*-1);
+			rect.get(rectNum).setY(startY);
+			rect.get(rectNum).setHeight(gapY*-1);
 		}
 		else if(gapY > 0) {
-			rect.setY(dragY);
-			rect.setHeight(gapY);
+			rect.get(rectNum).setY(dragY);
+			rect.get(rectNum).setHeight(gapY);
 		}
 		if(gapX < 0) {
-			rect.setX(startX);
-			rect.setWidth(gapX*-1);
+			rect.get(rectNum).setX(startX);
+			rect.get(rectNum).setWidth(gapX*-1);
 		}
 		else if(gapX > 0) {
-			rect.setX(dragX);
-			rect.setWidth(gapX);
+			rect.get(rectNum).setX(dragX);
+			rect.get(rectNum).setWidth(gapX);
 		}
 		if(shift) {
 			if(gapY < 0 && gapX < 0) {
-				if(rect.getHeight() > rect.getWidth()) {
-					rect.setWidth(rect.getHeight());
+				if(rect.get(rectNum).getHeight() > rect.get(rectNum).getWidth()) {
+					rect.get(rectNum).setWidth(rect.get(rectNum).getHeight());
 				} else {
-					rect.setHeight(rect.getWidth());
+					rect.get(rectNum).setHeight(rect.get(rectNum).getWidth());
 				}
 			} else if(gapY < 0 && gapX > 0) {
-				if(rect.getHeight() > gapX) {
-					rect.setX(startX - rect.getHeight());
-					rect.setWidth(rect.getHeight());
+				if(rect.get(rectNum).getHeight() > gapX) {
+					rect.get(rectNum).setX(startX - rect.get(rectNum).getHeight());
+					rect.get(rectNum).setWidth(rect.get(rectNum).getHeight());
 				} else {
-					rect.setHeight(rect.getWidth());
+					rect.get(rectNum).setHeight(rect.get(rectNum).getWidth());
 				}
 			} else if(gapY > 0 && gapX < 0) {
-				if(rect.getWidth() > gapY) {
-					rect.setY(startY - rect.getWidth());
-					rect.setHeight(rect.getWidth());
+				if(rect.get(rectNum).getWidth() > gapY) {
+					rect.get(rectNum).setY(startY - rect.get(rectNum).getWidth());
+					rect.get(rectNum).setHeight(rect.get(rectNum).getWidth());
 				} else {
-					rect.setWidth(rect.getHeight());
+					rect.get(rectNum).setWidth(rect.get(rectNum).getHeight());
 				}
 			} else if(gapY > 0 && gapY > 0) {
-				if(rect.getHeight() > gapX) {
-					rect.setX(startX - rect.getHeight());
-					rect.setWidth(rect.getHeight());
-				} else if(rect.getWidth() > gapY) {
-					rect.setY(startY - rect.getWidth());
-					rect.setHeight(rect.getWidth());
+				if(rect.get(rectNum).getHeight() > gapX) {
+					rect.get(rectNum).setX(startX - rect.get(rectNum).getHeight());
+					rect.get(rectNum).setWidth(rect.get(rectNum).getHeight());
+				} else if(rect.get(rectNum).getWidth() > gapY) {
+					rect.get(rectNum).setY(startY - rect.get(rectNum).getWidth());
+					rect.get(rectNum).setHeight(rect.get(rectNum).getWidth());
 				}
 			}
 		}
@@ -116,7 +120,11 @@ public class Panel extends Listener {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		requestFocusInWindow();
-		g.drawRect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
+		if(rectNum != -1) {
+			for(int i = 0; i < rectNum+1; i += 1) {
+				g.drawRect(rect.get(i).getX(), rect.get(i).getY(), rect.get(i).getWidth(), rect.get(i).getHeight());			
+			}
+		}
 		repaint();
 	}
 }
