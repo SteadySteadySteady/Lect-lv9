@@ -81,6 +81,7 @@ public class Panel extends Listener{
 		Object temp = e.getSource();
 		if(temp == startBt) run = true;
 		if(temp == resetBt) {
+			rank = 1;
 			for(int i = 0; i < horses.length; i += 1) {
 				ranks[i].setText("");
 				horses[i].setX(100);
