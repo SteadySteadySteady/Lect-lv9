@@ -82,6 +82,7 @@ public class Panel extends Listener{
 		if(temp == startBt) run = true;
 		if(temp == resetBt) {
 			for(int i = 0; i < horses.length; i += 1) {
+				ranks[i].setText("");
 				horses[i].setX(100);
 				horses[i].setRank(0);
 				horses[i].setState(horses[i].RUN);
@@ -114,7 +115,7 @@ public class Panel extends Listener{
 					}
 					if(horses[i].getX() == endLineX - w && horses[i].getState() == horses[i].RUN) {
 						horses[i].setState(horses[i].GOAL);
-						ranks[i].setText(String.valueOf(rank));
+						ranks[i].setText(String.valueOf(rank)+"µî");
 						horses[i].setRank(rank);
 						rank += 1;
 					}
